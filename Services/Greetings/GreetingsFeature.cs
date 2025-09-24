@@ -8,8 +8,8 @@ using Onion.Assignment.Shared.Interfaces;
 namespace Onion.Assignment.Services.Greetings;
 
 /// <summary>
-/// Feature registration for the Greetings service
-/// Handles all dependency registration and initialization for greeting-related functionality
+/// Feature registration for the Greetings service.
+/// Registers dependencies and handles initialization for greeting-related functionality.
 /// </summary>
 public class GreetingsFeature : IFeature
 {
@@ -17,19 +17,18 @@ public class GreetingsFeature : IFeature
 
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        // Register Domain layer dependencies (Use Cases)
+    // Register Domain layer dependencies (Use Cases)
         services.AddScoped<IGreetingUseCases, GreetingUseCases>();
         
-        // Register Data layer dependencies (Repositories)
+    // Register Data layer dependencies (Repositories)
         services.AddScoped<IGreetingRepository, SqliteGreetingRepository>();
         
-        // Note: API layer (Controllers) are automatically registered by ASP.NET Core
-        // when we call AddControllers() in the main registration
+    // Controllers are registered by ASP.NET Core via AddControllers()
     }
 
     public void RegisterDatabases(IServiceCollection services, IConfiguration configuration)
     {
-        // Register the GreetingDbContext with SQLite
+    // Register the GreetingDbContext with SQLite
         services.AddDbContext<GreetingDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("GreetingsDatabase") 
@@ -60,22 +59,21 @@ public class GreetingsFeature : IFeature
         }
         else
         {
-            // In production, you might want to use migrations instead
+            // For production, prefer migrations; EnsureCreated used here for simplicity.
             // await dbContext.Database.MigrateAsync();
             await dbContext.Database.EnsureCreatedAsync();
         }
         
-        // Could add seed data here if needed
+        // Optionally seed initial data
         // await SeedInitialDataAsync(dbContext);
     }
 
     private static async Task SeedInitialDataAsync(GreetingDbContext dbContext)
     {
-        // Example: Add some initial data if the database is empty
+        // Add initial data if the database is empty (example)
         if (!await dbContext.Greetings.AnyAsync())
         {
-            // Add seed data if needed
-            // var initialGreeting = new GreetingDataModel { ... };
+            // var initialGreeting = new GreetingDataModel { /* ... */ };
             // await dbContext.Greetings.AddAsync(initialGreeting);
             // await dbContext.SaveChangesAsync();
         }

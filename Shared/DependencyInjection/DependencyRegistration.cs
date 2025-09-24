@@ -5,29 +5,29 @@ using System.Reflection;
 namespace Onion.Assignment.Shared.DependencyInjection;
 
 /// <summary>
-/// Central dependency registration coordinator for the application
-/// Handles core services, third-party dependencies, and feature registration
+/// Central dependency registration coordinator for the application.
+/// Registers core services, third-party dependencies, and features.
 /// </summary>
 public static class DependencyRegistration
 {
     /// <summary>
-    /// Register all application dependencies including core services and features
+    /// Register all application dependencies including core services and features.
     /// </summary>
     /// <param name="builder">The WebApplication builder</param>
     public static void RegisterAllDependencies(this WebApplicationBuilder builder)
     {
-        // Register core ASP.NET Core services
+    // Register core ASP.NET Core services
         RegisterCoreServices(builder.Services, builder.Configuration);
         
-        // Register third-party dependencies
+    // Register third-party dependencies
         RegisterThirdPartyServices(builder.Services, builder.Configuration);
         
-        // Register all features
+    // Register all features
         RegisterFeatures(builder.Services, builder.Configuration);
     }
 
     /// <summary>
-    /// Initialize all registered features
+    /// Initialize all registered features.
     /// </summary>
     /// <param name="app">The built web application</param>
     public static async Task InitializeFeaturesAsync(this WebApplication app)
@@ -55,7 +55,7 @@ public static class DependencyRegistration
         // ASP.NET Core MVC
         services.AddControllers();
 
-        // Health checks (useful for monitoring)
+    // Health checks
         services.AddHealthChecks();
 
         // Add memory caching
@@ -70,7 +70,7 @@ public static class DependencyRegistration
 
     private static void RegisterThirdPartyServices(IServiceCollection services, IConfiguration configuration)
     {
-        // OpenAPI/Swagger
+    // OpenAPI/Swagger
         services.AddOpenApi();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
@@ -87,7 +87,7 @@ public static class DependencyRegistration
                 }
             });
             
-            // Include XML comments for better API documentation
+            // Include XML comments when available
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             if (File.Exists(xmlPath))
@@ -99,7 +99,7 @@ public static class DependencyRegistration
             c.DescribeAllParametersInCamelCase();
         });
 
-        // CORS (if needed for frontend applications)
+        // CORS
         services.AddCors(options =>
         {
             options.AddPolicy("AllowedOrigins", policy =>
@@ -121,7 +121,7 @@ public static class DependencyRegistration
         
         foreach (var feature in features)
         {
-            // Register databases first (other services might depend on them)
+            // Register databases first (other services may depend on them)
             feature.RegisterDatabases(services, configuration);
             
             // Then register other services
@@ -131,15 +131,11 @@ public static class DependencyRegistration
 
     private static List<IFeature> GetAllFeatures()
     {
-        // In a real application, you might use reflection to discover all IFeature implementations
-        // For now, we'll manually register known features
+        // Manually register known features (could be discovered via reflection)
         return new List<IFeature>
         {
             new GreetingsFeature()
-            // Add more features here as they're created
-            // new UsersFeature(),
-            // new OrdersFeature(),
-            // etc.
+            // Add more features here as needed
         };
     }
 }
