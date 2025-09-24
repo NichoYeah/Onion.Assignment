@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Onion.Assignment</name>
+    </assembly>
+    <members>
+        <member name="M:Onion.Assignment.Services.Greetings.Api.Controllers.GreetingsController.CreateGreeting(Onion.Assignment.Services.Greetings.Api.DTOs.CreateGreetingRequest,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new greeting for the specified name
+            </summary>
+            <param name="request">The greeting creation request</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>The created greeting</returns>
+        </member>
+        <member name="M:Onion.Assignment.Services.Greetings.Api.Controllers.GreetingsController.Hello(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Creates a greeting using the legacy /hello endpoint format
+            </summary>
+            <param name="name">The name to greet</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>The greeting message</returns>
+        </member>
+        <member name="M:Onion.Assignment.Services.Greetings.Api.Controllers.GreetingsController.GetGreetingById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets a greeting by its ID
+            </summary>
+            <param name="id">The greeting ID</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>The greeting if found</returns>
+        </member>
+        <member name="M:Onion.Assignment.Services.Greetings.Api.Controllers.GreetingsController.GetAllGreetings(System.Threading.CancellationToken)">
+            <summary>
+            Gets all greetings
+            </summary>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>All greetings</returns>
+        </member>
+        <member name="M:Onion.Assignment.Services.Greetings.Api.Controllers.GreetingsController.GetGreetingsByName(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets greetings by name
+            </summary>
+            <param name="name">The name to search for</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>Greetings matching the name</returns>
+        </member>
+        <member name="T:Onion.Assignment.Services.Greetings.GreetingsFeature">
+            <summary>
+            Feature registration for the Greetings service
+            Handles all dependency registration and initialization for greeting-related functionality
+            </summary>
+        </member>
+        <member name="T:Onion.Assignment.Shared.DependencyInjection.DependencyRegistration">
+            <summary>
+            Central dependency registration coordinator for the application
+            Handles core services, third-party dependencies, and feature registration
+            </summary>
+        </member>
+        <member name="M:Onion.Assignment.Shared.DependencyInjection.DependencyRegistration.RegisterAllDependencies(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+            <summary>
+            Register all application dependencies including core services and features
+            </summary>
+            <param name="builder">The WebApplication builder</param>
+        </member>
+        <member name="M:Onion.Assignment.Shared.DependencyInjection.DependencyRegistration.InitializeFeaturesAsync(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            Initialize all registered features
+            </summary>
+            <param name="app">The built web application</param>
+        </member>
+        <member name="T:Onion.Assignment.Shared.DependencyInjection.AppSettings">
+            <summary>
+            Configuration model for application settings
+            </summary>
+        </member>
+        <member name="T:Onion.Assignment.Shared.Interfaces.IFeature">
+            <summary>
+            Interface that each feature/service must implement for dependency registration
+            </summary>
+        </member>
+        <member name="P:Onion.Assignment.Shared.Interfaces.IFeature.FeatureName">
+            <summary>
+            The name of the feature for logging and identification purposes
+            </summary>
+        </member>
+        <member name="M:Onion.Assignment.Shared.Interfaces.IFeature.RegisterServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Register all dependencies specific to this feature
+            </summary>
+            <param name="services">The service collection to register dependencies with</param>
+            <param name="configuration">Application configuration for connection strings, settings, etc.</param>
+        </member>
+        <member name="M:Onion.Assignment.Shared.Interfaces.IFeature.RegisterDatabases(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configure any database contexts specific to this feature
+            </summary>
+            <param name="services">The service collection to register DbContexts with</param>
+            <param name="configuration">Application configuration for connection strings</param>
+        </member>
+        <member name="M:Onion.Assignment.Shared.Interfaces.IFeature.InitializeAsync(System.IServiceProvider,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Perform any initialization that needs to happen after the container is built
+            </summary>
+            <param name="serviceProvider">The built service provider</param>
+            <param name="environment">The hosting environment</param>
+        </member>
+    </members>
+</doc>
