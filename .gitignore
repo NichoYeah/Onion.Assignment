@@ -1,0 +1,76 @@
+#--------------------------------------
+# .NET / C# standard ignore patterns
+#--------------------------------------
+
+# Build outputs
+bin/
+obj/
+out/
+
+# Visual Studio / VS Code / IDE specific
+.vs/
+*.user
+*.suo
+*.userprefs
+*.orig
+.idea/
+*.swp
+
+# Tooling / caches
+*.cache
+*.log
+logs/
+.nuget/
+[TestResults]/
+*.coverage
+*.coveragexml
+coverage/
+
+# Dotnet artifacts
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Backup / temp
+*~
+*.tmp
+*.temp
+*.DS_Store
+Thumbs.db
+
+# Generated files (if any appear later)
+swagger*.json
+
+# SQLite local dev database (recreated automatically)
+#greetings.db  # Uncomment to ignore the dev database; currently we ignore it below.
+greetings.db
+*.db-shm
+*.db-wal
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# NCrunch
+*.ncrunchsolution
+*.ncrunchproject
+_ncrunch*/
+
+# Node (in case of future frontend assets)
+node_modules/
+
+# Publish artifacts
+publish/
+
+# Prevent committing secrets; adjust if you add real secrets files
+*.secret.json
+secrets.json
+
+# Optional: uncomment if you add migrations and want to keep them tracked
+# Migrations/
+
+# End of file

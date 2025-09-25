@@ -6,6 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 // This includes core services, third-party dependencies, and all features
 builder.RegisterAllDependencies();
 
+// Add simple output caching (for safe GET endpoints)
+builder.Services.AddOutputCache(options =>
+{
+    // Basic policy: cache for 30 seconds by default
+    options.AddBasePolicy(b => b.Expire(TimeSpan.FromSeconds(30)));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -28,10 +35,13 @@ app.UseHttpsRedirection();
 // Enable CORS (configured in dependency registration)
 app.UseCors("AllowedOrigins");
 
+// Enable output caching middleware BEFORE routing/endpoint execution
+app.UseOutputCache();
+
 // Add health check endpoint
 app.MapHealthChecks("/health");
 
-// Map API controllers
+// Map API controllers (attributes can override cache if needed)
 app.MapControllers();
 
 // Initialize all features (databases, seed data, etc.)

@@ -9,11 +9,12 @@ public class Greeting
     public string Message { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    public Greeting(PersonName name)
+    public Greeting(PersonName name, GreetingMessage? message = null)
     {
         Id = Guid.NewGuid();
         Name = name ?? throw new ArgumentNullException(nameof(name));
-        Message = $"Hello, {name}!";
+        var resolved = message ?? GreetingMessage.FromDefault(name);
+        Message = resolved.Value;
         CreatedAt = DateTime.UtcNow;
     }
 

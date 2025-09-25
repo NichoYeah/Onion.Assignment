@@ -40,31 +40,6 @@ public class GreetingsController : ControllerBase
     }
 
     /// <summary>
-    /// Creates a greeting using the legacy /hello endpoint format
-    /// </summary>
-    /// <param name="name">The name to greet</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The greeting message</returns>
-    [HttpGet("/hello")]
-    [ProducesResponseType(typeof(string), 200)]
-    [ProducesResponseType(typeof(string), 400)]
-    public async Task<ActionResult<string>> Hello(
-        [FromQuery] string name,
-        CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            var request = new CreateGreetingRequest(name);
-            var greeting = await _greetingUseCases.CreateGreetingAsync(request, cancellationToken);
-            return Ok(greeting.Message);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
-
-    /// <summary>
     /// Gets a greeting by its ID
     /// </summary>
     /// <param name="id">The greeting ID</param>
@@ -78,7 +53,7 @@ public class GreetingsController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var greeting = await _greetingUseCases.GetGreetingByIdAsync(id, cancellationToken);
-        
+
         return greeting != null ? Ok(greeting) : NotFound();
     }
 

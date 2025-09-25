@@ -18,7 +18,8 @@ public class GreetingUseCases : IGreetingUseCases
     {
         // Domain validation happens in PersonName constructor
         var personName = new PersonName(request.Name);
-        var greeting = new Greeting(personName);
+        var customMessage = request.Message is null ? null : new GreetingMessage(request.Message);
+        var greeting = new Greeting(personName, customMessage);
         
         var savedGreeting = await _greetingRepository.SaveAsync(greeting, cancellationToken);
         
